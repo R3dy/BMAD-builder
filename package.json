@@ -1,0 +1,13 @@
+{
+  "name": "bmad-builder",
+  "version": "1.0.0",
+  "type": "module",
+  "main": ".opencode/plugins/bmad-builder.js",
+  "description": "BMad Builder — Agentic SaaS build system. Takes any product idea from raw concept to live, revenue-generating product.",
+  "keywords": ["opencode", "plugin", "skill", "saas", "bmad", "builder"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/R3dy/BMAD-builder.git"
+  },
+  "license": "MIT"
+}
