@@ -10,7 +10,7 @@
 2. **One milestone at a time** — complete Milestone 1 before starting Milestone 2
 3. **Security built in** — security checks happen during build, not after
 4. **Test at boundaries** — integration tests on critical paths, not full unit coverage
-5. **Code review per PR** — Royce reviews first 3 PRs; after that Operant merges unless Royce asks to review
+5. **Code review per PR** — review first 3 PRs yourself; after that the AI merges unless you ask to review
 6. **Commit clean** — one logical change per commit, conventional commit messages
 
 ## Step 4.1 — Project Scaffold
@@ -90,11 +90,11 @@ First real product code. Everything else depends on this being correct.
 
 ## Step 4.3 — Epic Build Loop (Agentic)
 
-Step 4.3 is executed by the **BMad Orchestration System** — a three-tier agent loop that builds every story in the approved backlog autonomously, with Royce's visibility into all progress via the agile board.
+Step 4.3 is executed by the **BMad Orchestration System** — a three-tier agent loop that builds every story in the approved backlog autonomously, with your visibility into all progress via the agile board.
 
 ### How to Start the Orchestration Loop
 
-Invoke the orchestrator (Operant runs it as an Agent with `AGENTS/orchestrator.md` as its instructions):
+Invoke the orchestrator (the AI runs it as an Agent with `AGENTS/orchestrator.md` as its instructions):
 
 ```
 "Start the Phase 4 build loop for [project name]"
@@ -117,11 +117,11 @@ The board at `PROJECTS/[name]/BOARD.md` is your live visibility into the entire 
 | 🟡 | Ready | Next in queue, all dependencies done |
 | 🔵 | In Progress | Worker agent is building this story |
 | 🟠 | In Validation | Validator is checking acceptance criteria |
-| 👁 | Awaiting Review | PR is open — Royce needs to review |
+| 👁 | Awaiting Review | PR is open — you need to review |
 | ✅ | Done | Merged to main |
-| 🚫 | Blocked | Escalated to Royce — needs a decision |
+| 🚫 | Blocked | Escalated — awaiting your decision |
 
-The board also shows the Run Log (every event timestamped) and the Escalations section (any decision that needs Royce).
+The board also shows the Run Log (every event timestamped) and the Escalations section (any decision that needs your input).
 
 ### How the Agent System Works
 
@@ -136,9 +136,9 @@ Orchestrator
   ├── spawns Validator agent
   │     └── Validator: checks each acceptance criterion against the code,
   │                    runs security checklist, writes verdict (PASS/FAIL/ESCALATE)
-  └── on PASS: merges PR (or pauses for Royce review), updates board, loops
+  └── on PASS: merges PR (or pauses for your review), updates board, loops
       on FAIL: retries once with specific failure notes
-      on ESCALATE: pauses and notifies Royce
+      on ESCALATE: pauses and notifies you
 ```
 
 **Agent files:**
@@ -147,14 +147,14 @@ Orchestrator
 - `AGENTS/validator.md` — validator agent instructions (contract enforcement)
 - `AGENTS/policies.md` — all retry, escalation, and PR review policies
 
-**Royce reviews:**
-- PRs #1, #2, #3 always require Royce approval (see board for notification)
-- All Stripe webhook handler PRs always require Royce approval
+**Your reviews:**
+- PRs #1, #2, #3 always require your approval (see board for notification)
+- All payment webhook handler PRs always require your approval
 - All other PRs are merged autonomously after CI passes
 
-### When the Orchestrator Pauses and Asks for Royce
+### When the Orchestrator Pauses and Asks for You
 
-The orchestrator stops and notifies Royce in these cases:
+The orchestrator stops and notifies you in these cases:
 
 | Situation | What the board shows | What to do |
 |----------|---------------------|-----------|
@@ -163,7 +163,7 @@ The orchestrator stops and notifies Royce in these cases:
 | Validation failure (2nd attempt) | `🚫 Blocked` | Read the escalation, say `"changes needed: [notes]"` or `"skip story N.N"` |
 | Security check failure | `🚫 Blocked` | Read the escalation, review the security issue, say `"fix and retry"` |
 | Human-only acceptance criterion | `🚫 Blocked` | Manually verify in staging, say `"resume"` when confirmed |
-| Implementation failure | `🚫 Blocked` | Diagnose with Operant, say `"retry story N.N"` or `"skip story N.N"` |
+| Implementation failure | `🚫 Blocked` | Diagnose with the AI, say `"retry story N.N"` or `"skip story N.N"` |
 
 Full phrase lexicon is in `AGENTS/policies.md`.
 
@@ -252,7 +252,7 @@ After all epics are complete, before requesting launch approval.
 
 ## Step 4.6 — Staging Review
 
-Royce reviews the complete product on staging before launch approval:
+Review the complete product on staging before launch approval:
 - Complete user flow works end-to-end
 - Monetization flow works with test-mode Stripe
 - Product looks and feels ready to ship
@@ -267,7 +267,7 @@ Royce reviews the complete product on staging before launch approval:
 
 ## Gate
 
-Royce uses the staging environment and approves. Royce says "launch it" → proceed to Phase 5.
+Use the staging environment and approve. Say "launch it" → proceed to Phase 5.
 
 ## Templates
 

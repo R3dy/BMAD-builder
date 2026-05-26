@@ -1,6 +1,6 @@
 # Phase 2 — Planning
 
-**Goal:** Define what we're building with enough precision that Operant can execute Phase 4 without asking Royce product questions. Four sub-tracks run across sessions but are reviewed together at the gate.
+**Goal:** Define what we're building with enough precision that the AI can execute Phase 4 without asking product questions. Four sub-tracks run across sessions but are reviewed together at the gate.
 
 **Duration:** 2-4 sessions
 
@@ -43,7 +43,7 @@ RICE score = (Reach × Impact × Confidence) / Effort
 - Prioritized feature list (MVP vs post-MVP clearly separated)
 - All MVP features with complete acceptance criteria
 - Non-MVP features called out explicitly with reason for deferral
-- Open questions — decisions that still need Royce's input
+- Open questions — decisions that still need your input
 
 ---
 
@@ -172,7 +172,7 @@ Resolve every conflict. Do not proceed with open cross-track dependencies.
 
 Write `MVP_SCOPE.md`:
 - The complete, approved feature list for MVP
-- This is the contract between Royce and Operant
+- This is the contract between you and the AI
 - Nothing gets built that isn't in this document
 - New ideas during Phase 4 go to PARKING_LOT.md, not into scope
 
@@ -186,14 +186,14 @@ Write `MVP_SCOPE.md`:
 
 ## Gate
 
-Royce reviews all four outputs together. Key questions:
+Review all four outputs together. Key questions:
 - Is the PRD complete and unambiguous enough to build from?
 - Does the UX make the product experience clear?
 - Are the architecture choices justified and internally consistent?
 - Is the monetization plan integrated into the product (not an afterthought)?
 - Is the MVP scope tight enough to ship in Phase 4?
 
-Royce says "planning complete, start solutioning" → proceed to Phase 3.
+Say "planning complete, start solutioning" → proceed to Phase 3.
 
 ## Templates
 

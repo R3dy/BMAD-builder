@@ -94,10 +94,10 @@ Technical requirements before we ship.
 
 | Role | Name | Responsibility |
 |------|------|----------------|
-| Product Owner | Royce | Decisions, phase approvals |
-| Developer | Operant | Build, execute, report |
+| Product Owner | [Your name] | Decisions, phase approvals |
+| Developer | AI | Build, execute, report |
 | [Specialist] | TBD | [Responsibility — if needed] |
 
 ---
 
-*Approved by Royce on [date]. Changes require new gate approval.*
+*Approved by [product owner] on [date]. Changes require new gate approval.*
