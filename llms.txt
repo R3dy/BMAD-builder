@@ -1,0 +1,71 @@
+# BMad Builder
+
+> Agentic SaaS build system. Takes any product idea from raw concept to live, revenue-generating product through a six-phase, artifact-driven methodology with a built-in multi-agent implementation engine.
+
+## What BMad Builder is
+
+BMad Builder is an AI skill for [OpenCode.ai](https://opencode.ai) that guides product development through six disciplined phases — Foundation, Discovery, Planning, Solutioning, Implementation, and Launch — producing a concrete artifact at every step, requiring user approval at every phase gate, and autonomously building the product in Phase 4 with a three-tier agent system.
+
+**Install:**
+```json
+{ "plugin": ["bmad-builder@git+https://github.com/R3dy/BMAD-builder.git"] }
+```
+Add to `~/.config/opencode/opencode.json`, then restart OpenCode.
+
+**Trigger:** Say "Start a new project" or "Continue [project name]".
+
+## Core concepts
+
+- **Phases** — Six sequential phases, each gated on user approval before advancing
+- **Artifacts** — Every phase produces a document. Documents are truth; conversation memory is not
+- **One step per session** — Prevents scope creep; every session ends with a clear artifact and named next action
+- **PHASE_STATE.md** — The system's bookmark; records current phase, step, last artifact, and next action
+- **PARKING_LOT.md** — Scope requests that arrive mid-phase; logged, never acted on without a new gate
+- **BOARD.md** — Live agile board updated after every Phase 4 agent action
+
+## The six phases
+
+- Phase 0 – Foundation: Define elevator pitch, scope, revenue model, success metrics → `PROJECT.md`
+- Phase 1 – Discovery: Market research, competitor analysis, user personas, risk register → `docs/01-discovery.md`
+- Phase 2 – Planning: PRD, UX design system + prototype, architecture decisions (ADRs), monetization plan
+- Phase 3 – Solutioning: Epics, user stories with acceptance criteria, ordered backlog, dependency graph
+- Phase 4 – Implementation: Scaffold → Auth → Agentic build loop → Security review → Staging deploy
+- Phase 5 – Launch: Live deployment, metrics dashboard, growth loop
+
+## Phase 4 agent system
+
+Three-tier autonomous build loop in `AGENTS/`:
+
+- **Orchestrator** — Reads backlog and dependency graph, manages BOARD.md, dispatches Workers and Validators one story at a time, enforces PR policy, escalates to user only when blocked
+- **Worker** — Receives one story via task brief, implements in strict layer order (Schema → Migration → API → Frontend → Tests), commits each layer, opens a PR
+- **Validator** — Checks every acceptance criterion, runs security checklist, returns PASS / FAIL / ESCALATE
+- **Policies** — Shared retry matrix (max 2 environment retries, max 1 implementation retry), PR review rules (PRs 1–3 always require user review; webhooks/payments always require user review), escalation phrase lexicon, failure classification guide
+
+## Key files
+
+- [SKILL.md](SKILL.md) — Top-level skill definition (loaded by OpenCode plugin)
+- [AGENTS.md](AGENTS.md) — Full agent guide: hierarchy, rules, file conventions, anti-patterns
+- [.opencode/INSTALL.md](.opencode/INSTALL.md) — Detailed installation and troubleshooting
+- [PHASE_GUIDES/phase-0.md](PHASE_GUIDES/phase-0.md) — Foundation phase guide
+- [PHASE_GUIDES/phase-1.md](PHASE_GUIDES/phase-1.md) — Discovery phase guide
+- [PHASE_GUIDES/phase-2.md](PHASE_GUIDES/phase-2.md) — Planning phase guide
+- [PHASE_GUIDES/phase-3.md](PHASE_GUIDES/phase-3.md) — Solutioning phase guide
+- [PHASE_GUIDES/phase-4.md](PHASE_GUIDES/phase-4.md) — Implementation phase guide (includes agent activation)
+- [PHASE_GUIDES/phase-5.md](PHASE_GUIDES/phase-5.md) — Launch phase guide
+- [AGENTS/orchestrator.md](AGENTS/orchestrator.md) — Orchestrator agent instructions
+- [AGENTS/worker.md](AGENTS/worker.md) — Worker agent instructions
+- [AGENTS/validator.md](AGENTS/validator.md) — Validator agent instructions
+- [AGENTS/policies.md](AGENTS/policies.md) — Retry, PR review, and escalation policies
+- [TEMPLATES/project.md](TEMPLATES/project.md) — Phase 0 artifact template
+- [TEMPLATES/prd.md](TEMPLATES/prd.md) — PRD template
+- [TEMPLATES/ux-design.md](TEMPLATES/ux-design.md) — UX design system template
+- [TEMPLATES/adr.md](TEMPLATES/adr.md) — Architecture decision record template
+- [TEMPLATES/monetization.md](TEMPLATES/monetization.md) — Revenue model template
+- [TEMPLATES/epic.md](TEMPLATES/epic.md) — Epic template
+- [TEMPLATES/story.md](TEMPLATES/story.md) — User story template
+- [TEMPLATES/task-brief.md](TEMPLATES/task-brief.md) — Phase 4 Worker task specification template
+- [TEMPLATES/BOARD.md](TEMPLATES/BOARD.md) — Agile board template (copied at Phase 4 start)
+- [TEMPLATES/validation-report.md](TEMPLATES/validation-report.md) — Validator report template
+- [TEMPLATES/phase-state.md](TEMPLATES/phase-state.md) — PHASE_STATE.md template
+- [TEMPLATES/launch-checklist.md](TEMPLATES/launch-checklist.md) — Pre-launch checklist
+- [TEMPLATES/metrics-dashboard.md](TEMPLATES/metrics-dashboard.md) — Metrics dashboard template
