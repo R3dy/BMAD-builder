@@ -144,6 +144,19 @@ Determine review requirement using `AGENTS/policies.md` PR review rules:
 - All other PRs → merge autonomously after CI passes
 
 **If your review required:**
+
+First, check `PROJECTS/[name]/PHASE_STATE.md` for `autonomous_mode: true`.
+
+**If autonomous mode is active:** spawn the Product Owner Proxy instead of pausing:
+```
+Agent({
+  instructions: [full contents of AGENTS/product-owner-proxy.md],
+  message: "Gate type: phase4-pr-review. Project root: [absolute path]. Story: [N.N]. Validation report: [absolute path to validation-reports/story-N.N.md]. Task brief: [absolute path to task-briefs/story-N.N.md]."
+})
+```
+Read the proxy's returned phrase and act on it immediately — treat it exactly as you would treat the user saying that phrase. Update BOARD.md and the Run Log to reflect the proxy's decision.
+
+**If autonomous mode is NOT active:**
 1. Update BOARD.md: story → `👁 Awaiting Review`
 2. Write a you notification (see format below)
 3. Append to Run Log: `[time] Story N.N — PR #N awaiting your review`
@@ -189,6 +202,36 @@ The board is your only window into the process. It must be accurate at all times
 
 When any escalation condition is met:
 
+**Security failures always follow the standard protocol regardless of autonomous mode.** For all other escalation types, check `PROJECTS/[name]/PHASE_STATE.md` for `autonomous_mode: true` before halting.
+
+**If the escalation type is security-failure (in any mode):**
+1. Update BOARD.md: story → `🚫 Blocked`
+2. Populate the Escalations section of BOARD.md with full details (see format in `TEMPLATES/BOARD.md`)
+3. Append to Run Log: `[time] ESCALATED — security-failure — Story N.N`
+4. Update `PROJECTS/[name]/PHASE_STATE.md`: Step 4.3 is paused, reference BOARD.md
+5. Output the escalation message directly (not just to the board)
+6. **STOP** — security failures always require the real user
+
+**If autonomous mode is active (non-security escalation types):** spawn the Product Owner Proxy before halting:
+
+```
+Agent({
+  instructions: [full contents of AGENTS/product-owner-proxy.md],
+  message: "Gate type: phase4-escalation-[type]. Project root: [absolute path]. Story: [N.N]. [Include relevant context: failure_description, validation report paths, task brief path, board state as applicable to the escalation type.]"
+})
+```
+
+Escalation types and their gate type values:
+- Human-only criterion in validator → `phase4-escalation-human-only`
+- Worker implementation failure → `phase4-escalation-implementation-failure`
+- Second validation FAIL → `phase4-escalation-validation-fail-2nd`
+- All stories blocked → `phase4-escalation-all-blocked`
+
+Read the proxy's returned phrase and act on it:
+- If the phrase is a lexicon phrase (`resume`, `changes needed: ...`, `skip story N.N`, etc.) → act on it and continue the loop
+- If the proxy returns `ESCALATE TO USER` → proceed with the standard protocol below (update BOARD.md, output message, STOP)
+
+**Standard escalation protocol (non-security, non-autonomous-mode):**
 1. Update BOARD.md: story → `🚫 Blocked`
 2. Populate the Escalations section of BOARD.md with full details (see format in `TEMPLATES/BOARD.md`)
 3. Append to Run Log: `[time] ESCALATED — [type] — Story N.N`

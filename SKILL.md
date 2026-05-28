@@ -1,6 +1,6 @@
 ---
 name: bmad-builder
-description: Use when the user wants to build a SaaS product — from raw idea to live, revenue-generating product. Triggers on "start a new project", "continue my build", "plan a product", "build an app", "BMad", "agentic build", "structured build process", "I have a product idea", "launch a SaaS", or when working on any new product development. Guides through Foundation → Discovery → Planning → Solutioning → Implementation → Launch with user approval at each phase gate. Each session produces a concrete artifact and ends with a clear next action.
+description: Use when the user wants to build a SaaS product — from raw idea to live, revenue-generating product. Triggers on "start a new project", "continue my build", "plan a product", "build an app", "BMad", "agentic build", "structured build process", "I have a product idea", "launch a SaaS", "yolo mode", "autonomous mode", "--yolo", "build autonomously", or when working on any new product development. Guides through Foundation → Discovery → Planning → Solutioning → Implementation → Launch with user approval at each phase gate (or via autonomous Product Owner Proxy in yolo mode). Each session produces a concrete artifact and ends with a clear next action.
 ---
 
 # BMad Builder — Agentic SaaS Build System
@@ -43,12 +43,15 @@ Every session:
 
 ```
 1. Check PROJECTS/[name]/PHASE_STATE.md — if it doesn't exist, start Phase 0
+   Also check: is autonomous_mode: true set? This determines gate behavior for the session.
 2. Identify current phase + current step
 3. Read PHASE_GUIDES/phase-N.md for the detailed instructions for that step
 4. Execute exactly one step — completely
+   (In autonomous mode: continue through multiple steps and phases without stopping at gates)
 5. Produce the concrete artifact or decision for that step
 6. Update PHASE_STATE.md
 7. Report: what was done → what needs your eyes → what's next
+   (In autonomous mode: log to PHASE_STATE.md; only surface to user on escalation or completion)
 ```
 
 **If you is vague:** Make a concrete recommendation. Ask one yes/no question. Don't list options.
@@ -65,12 +68,28 @@ Every session:
 
 ## Behavioral Rules
 
-1. **One step per session** — complete it fully before reporting
+1. **One step per session** — complete it fully before reporting (suspended in autonomous mode — see below)
 2. **One artifact at a time** — finish one document before starting the next
 3. **Recommend, don't list** — "I recommend X because Y" not "here are 5 options"
 4. **Scope is a hard boundary** — nothing gets built outside approved scope
 5. **Clean exits** — every session ends with PHASE_STATE.md updated and next step named
 6. **Revenue is first-class** — monetization is designed in Phase 2, built in Phase 4
+7. **Autonomous mode gates** — when `autonomous_mode: true`, spawn the Product Owner Proxy (`AGENTS/product-owner-proxy.md`) at every phase gate instead of waiting for user input. The proxy is strict: it returns specific required changes when artifacts are incomplete, not approvals for weak work. Security failures in Phase 4 always escalate to the real user regardless of mode — that override is absolute.
+
+## Autonomous Mode (Yolo)
+
+**Activated by:** `--yolo`, `yolo mode`, `autonomous mode`, or `build autonomously` alongside any project trigger.
+
+**When activated:**
+1. Set `autonomous_mode: true` in `PROJECTS/[name]/PHASE_STATE.md` — note this prominently at the start of the session
+2. Proceed through all phases without stopping at user approval gates — spawn the Product Owner Proxy to evaluate each gate
+3. The proxy approves clean artifacts and returns specific required changes for incomplete ones — it does not rubber-stamp
+4. Continue to the next phase only when the proxy returns `APPROVED`; if it returns `NEEDS CHANGES`, address each item and re-run the proxy review
+5. The only gate that still pauses for human input: `ESCALATE TO USER` from the proxy (which always happens on security failures)
+
+**Rule 1 is suspended in autonomous mode.** Continue through multiple steps and phases in one run until all phases are complete or a human escalation is required.
+
+**Trigger phrases:** `"Start a new project --yolo"`, `"Build autonomously: [idea]"`, `"Autonomous mode: [idea]"`, `"Continue [project name] --yolo"`
 
 ## Anti-Patterns
 

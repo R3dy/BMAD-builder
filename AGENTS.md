@@ -126,17 +126,41 @@ Phase 4, Step 4.3 runs an autonomous three-tier agent system. All agent definiti
 - Approve a PR with unresolved security issues
 - Return PASS when acceptance criteria are only partially met
 
+### Product Owner Proxy (`AGENTS/product-owner-proxy.md`)
+
+**Role:** Autonomous gate evaluator. Active only when `autonomous_mode: true` in PHASE_STATE.md. Spawned by the main agent at phase gates (Phases 0–3, and Phase 4.6) and by the orchestrator at Phase 4 pause points (PR reviews, escalations).
+
+**Inputs:**
+- Gate type — determines which evaluation criteria to apply
+- Project root path
+- Specific artifact paths to read and evaluate
+
+**Evaluation:** Applies strict, per-gate criteria against the actual artifact content. Checks for unfilled placeholders, completeness of required sections, quality of acceptance criteria, presence of mandatory ADRs, correct milestone ordering, and more depending on the gate type.
+
+**Returns one of:**
+- `VERDICT: APPROVED` (phase gates) or `PHRASE: [lexicon phrase]` (Phase 4 gates) — proceed
+- `VERDICT: NEEDS CHANGES` with a specific list — revise and re-run
+- `VERDICT: ESCALATE TO USER` — override autonomous mode, notify real user
+
+**Key constraint:** Security failures (`phase4-escalation-security-failure` gate type) always produce `ESCALATE TO USER`. The proxy never auto-resolves security issues — that override is absolute and cannot be bypassed.
+
+**Proxy must never:**
+- Approve a gate with unfilled template placeholder text in required content sections
+- Return `PHRASE: approved` when a validation report verdict is not PASS
+- Return `PHRASE: approved` when any security check in a validation report is FAIL
+- Skip evaluation criteria to speed up processing — check every item
+
 ### Policies (`AGENTS/policies.md`)
 
 All agents read `AGENTS/policies.md` before operating. It defines:
 
 **PR review policy:**
-| Condition | Merge action |
-|-----------|-------------|
-| PR number ≤ 3 | Always escalate to user for review |
-| Story involves webhooks | Escalate to user for review |
-| Story involves payment flows | Escalate to user for review |
-| All other PRs | Orchestrator merges on Validator PASS |
+| Condition | Normal mode | Autonomous mode |
+|-----------|-------------|----------------|
+| PR number ≤ 3 | Escalate to user for review | Spawn Product Owner Proxy to review |
+| Story involves webhooks | Escalate to user for review | Spawn Product Owner Proxy to review |
+| Security failure in validation | Escalate to user — always | Escalate to user — always (proxy not used) |
+| All other PRs | Orchestrator merges on Validator PASS | Orchestrator merges on Validator PASS |
 
 **Failure classification:**
 | Type | Examples | Action |
@@ -215,12 +239,13 @@ All project output goes to `PROJECTS/[name]/`. Never modify files in `PHASE_GUID
 | File | Purpose |
 |------|---------|
 | `SKILL.md` | Top-level skill definition loaded by OpenCode |
-| `AGENTS/orchestrator.md` | Full Orchestrator instructions |
+| `AGENTS/orchestrator.md` | Full Orchestrator instructions (includes autonomous mode handling) |
 | `AGENTS/worker.md` | Full Worker instructions |
 | `AGENTS/validator.md` | Full Validator instructions |
-| `AGENTS/policies.md` | Retry matrix, PR policy, escalation phrases, failure classification |
+| `AGENTS/product-owner-proxy.md` | Product Owner Proxy instructions (autonomous mode gate evaluator) |
+| `AGENTS/policies.md` | Retry matrix, PR policy, escalation phrases, failure classification, autonomous mode policy |
 | `PHASE_GUIDES/phase-4.md` | Full Phase 4 implementation guide (includes agent activation steps) |
 | `TEMPLATES/task-brief.md` | Template Orchestrator uses to brief each Worker |
 | `TEMPLATES/BOARD.md` | Board template copied at Phase 4 start |
 | `TEMPLATES/validation-report.md` | Template Validator fills out |
-| `TEMPLATES/phase-state.md` | Template for PHASE_STATE.md |
+| `TEMPLATES/phase-state.md` | Template for PHASE_STATE.md (includes `autonomous_mode` field) |

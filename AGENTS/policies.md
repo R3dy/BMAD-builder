@@ -127,6 +127,37 @@ These are the exact phrases you use to unblock the orchestrator. The orchestrato
 
 ---
 
+## Autonomous Mode Policy
+
+When `autonomous_mode: true` is set in `PROJECTS/[name]/PHASE_STATE.md`, the Product Owner Proxy agent (`AGENTS/product-owner-proxy.md`) handles all gates and escalations that would normally require user input.
+
+**Proxy spawn points:**
+| Trigger | Who spawns the proxy | Gate type passed |
+|---------|---------------------|-----------------|
+| Phase 0 gate | Main agent | `phase-0-approval` |
+| Phase 1 gate | Main agent | `phase-1-approval` |
+| Phase 2 prototype gate | Main agent | `phase-2-prototype-review` |
+| Phase 2 final gate | Main agent | `phase-2-approval` |
+| Phase 3 gate | Main agent | `phase-3-approval` |
+| Phase 4 PR review pause | Orchestrator | `phase4-pr-review` |
+| Phase 4 human-only criterion | Orchestrator | `phase4-escalation-human-only` |
+| Phase 4 implementation failure | Orchestrator | `phase4-escalation-implementation-failure` |
+| Phase 4 2nd validation FAIL | Orchestrator | `phase4-escalation-validation-fail-2nd` |
+| Phase 4 all stories blocked | Orchestrator | `phase4-escalation-all-blocked` |
+| Phase 4.6 staging review | Main agent | `phase-4-staging-review` |
+
+**Security failure override (absolute — cannot be bypassed):**
+Any escalation with escalation type `security-failure` is handled by the standard escalation protocol regardless of autonomous mode. The proxy is not spawned. The orchestrator halts and notifies the real user directly. This override applies in all modes and all circumstances.
+
+**Proxy verdict interpretation:**
+- `VERDICT: APPROVED` or `PHRASE: approved` → continue as if the user said the corresponding approval phrase
+- `VERDICT: NEEDS CHANGES [list]` or `PHRASE: changes needed: [...]` → address each specific item and re-run (for phases: revise artifacts and re-spawn proxy; for Phase 4: dispatch worker with the specific notes as RETRY CONTEXT)
+- `VERDICT: ESCALATE TO USER` or `PHRASE: blocked — stop` → override autonomous mode for this decision: halt, output the proxy's reason to the real user, and wait for human input before resuming
+
+**Autonomous mode does not change the retry matrix.** Environment retries, implementation retries, and validation retries follow the same limits as normal mode. The proxy handles the gate decisions; the retry policies govern how many attempts happen before a gate decision is needed.
+
+---
+
 ## Definition of "CI Passing"
 
 Before any autonomous merge, the orchestrator confirms:

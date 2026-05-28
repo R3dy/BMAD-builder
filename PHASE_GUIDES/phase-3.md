@@ -169,6 +169,19 @@ your reviews epics and backlog. Key questions:
 
 You say "solutioning complete, start building" → proceed to Phase 4.
 
+**Autonomous mode:** If `autonomous_mode: true` is set in PHASE_STATE.md, spawn the Product Owner Proxy instead of waiting:
+
+```
+Agent({
+  instructions: [full contents of AGENTS/product-owner-proxy.md],
+  message: "Gate type: phase-3-approval. Project root: [absolute path]. Artifacts: [absolute paths to PROJECTS/[name]/docs/03-solutioning/epics.md, backlog.md, dependency-graph.md]."
+})
+```
+
+- `VERDICT: APPROVED` → proceed to Phase 4
+- `VERDICT: NEEDS CHANGES` → address every listed item, update the affected solutioning documents, then re-run the proxy
+- `VERDICT: ESCALATE TO USER` → output the reason to the user and wait for their input before continuing
+
 ## Templates
 
 See `../TEMPLATES/epic.md`, `../TEMPLATES/story.md`
