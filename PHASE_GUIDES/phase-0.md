@@ -94,6 +94,19 @@ your reviews `PROJECT.md`. Key questions:
 
 You say "looks good, start Discovery" → proceed to Phase 1.
 
+**Autonomous mode:** If `autonomous_mode: true` is set in PHASE_STATE.md, spawn the Product Owner Proxy instead of waiting:
+
+```
+Agent({
+  instructions: [full contents of AGENTS/product-owner-proxy.md],
+  message: "Gate type: phase-0-approval. Project root: [absolute path]. Artifacts: [absolute path to PROJECTS/[name]/PROJECT.md]."
+})
+```
+
+- `VERDICT: APPROVED` → proceed to Phase 1
+- `VERDICT: NEEDS CHANGES` → address every listed item, update PROJECT.md, then re-run the proxy
+- `VERDICT: ESCALATE TO USER` → output the reason to the user and wait for their input before continuing
+
 ## Templates
 
 See `../TEMPLATES/project.md`

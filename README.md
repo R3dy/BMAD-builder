@@ -57,8 +57,25 @@ For Windows troubleshooting or pinning a specific version, see [`.opencode/INSTA
 | `"Continue [project name]"` | Reads `PHASE_STATE.md`, resumes the last step |
 | `"I have a product idea: [description]"` | Triggers BMad, starts Phase 0 |
 | `"Build an app"` | Triggers BMad Builder |
+| `"Start a new project --yolo"` | **Autonomous mode** — runs all phases without stopping at gates |
+| `"Continue [project name] --yolo"` | **Autonomous mode** — resumes and continues without gate pauses |
 
 Every project lives in `PROJECTS/[name]/` and is **gitignored** — your product code stays in your project, the build system stays here.
+
+## Autonomous Mode (Yolo)
+
+Add `--yolo` to any project trigger to run the full build without pausing at phase gates. Instead of waiting for your approval at each phase transition, the system spawns a **Product Owner Proxy** sub-agent that reviews each artifact against strict, per-gate criteria and either approves it or returns a specific list of required changes.
+
+The proxy is not a rubber stamp — it enforces the same completeness and quality bar you would:
+- Checks for unfilled template placeholders in required sections
+- Verifies acceptance criteria are specific and testable (not "works correctly")
+- Confirms all mandatory ADRs are present and decided
+- Validates that Monetization is Milestone 4 or earlier
+- Runs the prototype build and checks for real content and brand color application
+
+**The one hard exception:** Security failures in Phase 4 always halt and notify the real user regardless of mode. This override is absolute and cannot be bypassed.
+
+The proxy is defined in `AGENTS/product-owner-proxy.md` and runs as a fresh sub-agent at each gate with no memory of prior turns.
 
 ## Project Workspace Layout
 

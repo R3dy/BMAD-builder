@@ -175,6 +175,8 @@ The orchestrator stops and notifies you in these cases:
 
 Full phrase lexicon is in `AGENTS/policies.md`.
 
+**Autonomous mode:** In autonomous mode (`autonomous_mode: true` in PHASE_STATE.md), the orchestrator spawns the Product Owner Proxy instead of pausing at these points. The proxy evaluates the situation and returns the appropriate phrase from the lexicon. The only exception is security failures — those always halt and notify the real user regardless of mode. See `AGENTS/orchestrator.md` for the orchestrator's autonomous mode behavior and `AGENTS/product-owner-proxy.md` for the proxy's evaluation criteria.
+
 ### Story Build Contract
 
 Every story the worker builds is governed by a task brief at:
@@ -265,6 +267,19 @@ your reviews the complete product on staging before launch approval:
 - Monetization flow works with test-mode Stripe
 - Product looks and feels ready to ship
 
+**Autonomous mode:** If `autonomous_mode: true` is set in PHASE_STATE.md, spawn the Product Owner Proxy for a code-level staging check instead of waiting:
+
+```
+Agent({
+  instructions: [full contents of AGENTS/product-owner-proxy.md],
+  message: "Gate type: phase-4-staging-review. Project root: [absolute path]. Artifacts: [absolute paths to PROJECTS/[name]/BOARD.md, PROJECTS/[name]/docs/environment.md]."
+})
+```
+
+- `PHRASE: launch it` → proceed to Phase 5
+- `NEEDS CHANGES` → address the listed gaps and re-run the proxy
+- Note: End-to-end browser testing and payment flow verification require a real human. This is a documented limitation of autonomous mode — the proxy checks board completeness and environment documentation, not live staging behavior.
+
 ## Output
 
 - `src/` — complete, production-ready codebase
@@ -276,6 +291,8 @@ your reviews the complete product on staging before launch approval:
 ## Gate
 
 You use the staging environment and approves. You say "launch it" → proceed to Phase 5.
+
+**Autonomous mode:** Gate is handled by the Product Owner Proxy at Step 4.6 above. In autonomous mode, the proxy's `PHRASE: launch it` serves as the gate approval.
 
 ## Templates
 

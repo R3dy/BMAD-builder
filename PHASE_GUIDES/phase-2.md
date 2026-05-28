@@ -138,6 +138,19 @@ Run the prototype locally and answer two questions:
 
 Both must be Yes before proceeding. If No on either: revise the prototype, do not proceed to 2.3.
 
+**Autonomous mode:** If `autonomous_mode: true` is set in PHASE_STATE.md, spawn the Product Owner Proxy instead of a human visual review:
+
+```
+Agent({
+  instructions: [full contents of AGENTS/product-owner-proxy.md],
+  message: "Gate type: phase-2-prototype-review. Project root: [absolute path]. Prototype directory: [absolute path to PROJECTS/[name]/prototype/]. UX design: [absolute path to PROJECTS/[name]/docs/02-planning/ux-design.md]."
+})
+```
+
+- `VERDICT: APPROVED` → proceed to Step 2.3
+- `VERDICT: NEEDS CHANGES` → fix every listed item in the prototype, then re-run the proxy
+- Note: The proxy checks code-verifiable signals (build success, real content, brand color, required screens). Visual quality judgment requires human review — this is a documented limitation of autonomous mode.
+
 The approved prototype becomes the **visual contract** for Phase 4. Worker agents build the production version to match this prototype's look, feel, and content quality.
 
 ---
@@ -254,6 +267,19 @@ your reviews all outputs together. Key questions:
 **The prototype is a hard gate.** If it doesn't look production-quality, revise before proceeding.
 
 You say "planning complete, start solutioning" → proceed to Phase 3.
+
+**Autonomous mode:** If `autonomous_mode: true` is set in PHASE_STATE.md, spawn the Product Owner Proxy instead of waiting:
+
+```
+Agent({
+  instructions: [full contents of AGENTS/product-owner-proxy.md],
+  message: "Gate type: phase-2-approval. Project root: [absolute path]. Artifacts: [absolute paths to PROJECTS/[name]/docs/02-planning/prd.md, ux-design.md, architecture/ADR-001.md through ADR-007.md, monetization.md, MVP_SCOPE.md]."
+})
+```
+
+- `VERDICT: APPROVED` → proceed to Phase 3
+- `VERDICT: NEEDS CHANGES` → address every listed item, update the relevant artifacts, then re-run the proxy
+- `VERDICT: ESCALATE TO USER` → output the reason to the user and wait for their input before continuing
 
 ## Templates
 

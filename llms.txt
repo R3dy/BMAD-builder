@@ -41,6 +41,10 @@ Three-tier autonomous build loop in `AGENTS/`:
 - **Validator** — Checks every acceptance criterion, runs security checklist, returns PASS / FAIL / ESCALATE
 - **Policies** — Shared retry matrix (max 2 environment retries, max 1 implementation retry), PR review rules (PRs 1–3 always require user review; webhooks/payments always require user review), escalation phrase lexicon, failure classification guide
 
+## Autonomous mode (yolo)
+
+Activated by adding `--yolo` to any project trigger. Spawns a **Product Owner Proxy** sub-agent (`AGENTS/product-owner-proxy.md`) at each phase gate instead of waiting for human approval. The proxy applies strict per-gate criteria and returns APPROVED, specific required changes, or ESCALATE TO USER. Security failures always escalate to the real user regardless of mode. Autonomous mode is recorded in `PHASE_STATE.md` as `autonomous_mode: true`.
+
 ## Key files
 
 - [SKILL.md](SKILL.md) — Top-level skill definition (loaded by OpenCode plugin)
@@ -52,10 +56,11 @@ Three-tier autonomous build loop in `AGENTS/`:
 - [PHASE_GUIDES/phase-3.md](PHASE_GUIDES/phase-3.md) — Solutioning phase guide
 - [PHASE_GUIDES/phase-4.md](PHASE_GUIDES/phase-4.md) — Implementation phase guide (includes agent activation)
 - [PHASE_GUIDES/phase-5.md](PHASE_GUIDES/phase-5.md) — Launch phase guide
-- [AGENTS/orchestrator.md](AGENTS/orchestrator.md) — Orchestrator agent instructions
+- [AGENTS/orchestrator.md](AGENTS/orchestrator.md) — Orchestrator agent instructions (includes autonomous mode handling)
 - [AGENTS/worker.md](AGENTS/worker.md) — Worker agent instructions
 - [AGENTS/validator.md](AGENTS/validator.md) — Validator agent instructions
-- [AGENTS/policies.md](AGENTS/policies.md) — Retry, PR review, and escalation policies
+- [AGENTS/product-owner-proxy.md](AGENTS/product-owner-proxy.md) — Product Owner Proxy instructions (autonomous mode gate evaluator)
+- [AGENTS/policies.md](AGENTS/policies.md) — Retry, PR review, escalation policies, and autonomous mode policy
 - [TEMPLATES/project.md](TEMPLATES/project.md) — Phase 0 artifact template
 - [TEMPLATES/prd.md](TEMPLATES/prd.md) — PRD template
 - [TEMPLATES/ux-design.md](TEMPLATES/ux-design.md) — UX design system template
