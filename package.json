@@ -7,7 +7,7 @@
   "keywords": ["opencode", "plugin", "skill", "saas", "cli", "library", "anymake", "builder", "agentic"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/R3dy/BMAD-builder.git"
+    "url": "https://github.com/R3dy/Anymake.git"
   },
   "license": "MIT"
 }

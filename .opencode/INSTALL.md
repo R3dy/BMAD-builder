@@ -12,7 +12,7 @@ a project-scoped install.
 
 ```json
 {
-  "plugin": ["anymake@git+https://github.com/R3dy/BMAD-builder.git"]
+  "plugin": ["anymake@git+https://github.com/R3dy/Anymake.git"]
 }
 ```
 
@@ -32,7 +32,7 @@ Verify by asking: `"Start a new project"` — Claude should respond in Anymake m
    If not, create it. The result should look like:
    ```json
    {
-     "plugin": ["anymake@git+https://github.com/R3dy/BMAD-builder.git"]
+     "plugin": ["anymake@git+https://github.com/R3dy/Anymake.git"]
    }
    ```
 
@@ -59,7 +59,7 @@ To pin a specific version:
 
 ```json
 {
-  "plugin": ["anymake@git+https://github.com/R3dy/BMAD-builder.git#v1.0.0"]
+  "plugin": ["anymake@git+https://github.com/R3dy/Anymake.git#v1.0.0"]
 }
 ```
 
@@ -76,7 +76,7 @@ Ask: `"What skills do you have?"` — Anymake should appear in the list.
 **Windows install issues:**
 Some Windows builds have issues with git-backed plugin specs. Install via npm instead:
 ```powershell
-npm install anymake@git+https://github.com/R3dy/BMAD-builder.git --prefix "$HOME\.config\opencode"
+npm install anymake@git+https://github.com/R3dy/Anymake.git --prefix "$HOME\.config\opencode"
 ```
 Then point opencode.json at the local path:
 ```json
@@ -87,4 +87,4 @@ Then point opencode.json at the local path:
 
 ## Getting Help
 
-Report issues: https://github.com/R3dy/BMAD-builder/issues
+Report issues: https://github.com/R3dy/Anymake/issues

@@ -41,7 +41,7 @@ Add Anymake to the `plugin` array in your `opencode.json`:
 **Global install** (`~/.config/opencode/opencode.json`):
 ```json
 {
-  "plugin": ["anymake@git+https://github.com/R3dy/BMAD-builder.git"]
+  "plugin": ["anymake@git+https://github.com/R3dy/Anymake.git"]
 }
 ```
 
@@ -195,4 +195,4 @@ MIT — see [package.json](package.json).
 
 ## Issues & Contributions
 
-Report issues at [github.com/R3dy/BMAD-builder/issues](https://github.com/R3dy/BMAD-builder/issues).
+Report issues at [github.com/R3dy/Anymake/issues](https://github.com/R3dy/Anymake/issues).

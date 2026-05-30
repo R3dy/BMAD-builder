@@ -8,7 +8,7 @@ Anymake is an AI skill for [OpenCode.ai](https://opencode.ai) that guides produc
 
 **Install:**
 ```json
-{ "plugin": ["anymake@git+https://github.com/R3dy/BMAD-builder.git"] }
+{ "plugin": ["anymake@git+https://github.com/R3dy/Anymake.git"] }
 ```
 Add to `~/.config/opencode/opencode.json`, then restart OpenCode.
 
