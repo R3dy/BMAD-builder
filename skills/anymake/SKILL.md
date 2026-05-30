@@ -1,17 +1,17 @@
 ---
-name: bmad-builder
-description: Use when the user wants to build a SaaS product — from raw idea to live, revenue-generating product. Triggers on "start a new project", "continue my build", "plan a product", "build an app", "BMad", "agentic build", "structured build process", "I have a product idea", "launch a SaaS", "yolo mode", "autonomous mode", "--yolo", "build autonomously", or when working on any new product development. Guides through Foundation → Discovery → Planning → Solutioning → Implementation → Launch with user approval at each phase gate (or via autonomous Product Owner Proxy in yolo mode). Each session produces a concrete artifact and ends with a clear next action.
+name: anymake
+description: Use when the user wants to build software — a SaaS product, CLI tool, library, API service, internal tool, static site, or hobby project — from raw idea to a finished, shipped result. Triggers on "start a new project", "continue my build", "plan a product", "build an app", "Anymake", "agentic build", "structured build process", "I have a product idea", "launch a SaaS", "yolo mode", "autonomous mode", "--yolo", "build autonomously", or when working on any new product development. Guides through Foundation → Discovery → Planning → Solutioning → Implementation → Launch with user approval at each phase gate (or via autonomous Product Owner Proxy in yolo mode). Each session produces a concrete artifact and ends with a clear next action.
 ---
 
-# BMad Builder — Agentic SaaS Build System
+# Anymake — Agentic Build System
 
-**Purpose:** Take any SaaS product idea from conception to live, revenue-generating product.
-**Method:** BMad (Business-model Artificial intelligence Developer) — phased, artifact-driven, decisively executed
+**Purpose:** Take any software idea — SaaS, CLI, library, API, internal tool, static site, or hobby project — from conception to a finished, shipped result.
+**Method:** A phased, artifact-driven process that adapts to what you're building — decisively executed.
 **Roles:** You (product owner, decision maker) + Claude (AI operator, executor)
 
 ## Core Philosophy
 
-BMad is a structured development system, not a prompt chain:
+Anymake is a structured development system, not a prompt chain:
 
 - **you** own the vision, make all product and business decisions, and approve every phase gate
 - **Claude** executes everything: researches, plans, builds, deploys — within approved scope
@@ -153,4 +153,4 @@ Phase 4, Step 4.3 runs a three-tier agentic build loop. See `AGENTS/` for all ag
 
 ---
 
-*BMad Builder skill suite — v2.0*
+*Anymake skill suite — v2.0*

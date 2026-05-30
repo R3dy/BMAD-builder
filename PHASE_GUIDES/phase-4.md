@@ -98,7 +98,7 @@ First real product code. Everything else depends on this being correct.
 
 ## Step 4.3 — Epic Build Loop (Agentic)
 
-Step 4.3 is executed by the **BMad Orchestration System** — a three-tier agent loop that builds every story in the approved backlog autonomously, with your visibility into all progress via the agile board.
+Step 4.3 is executed by the **Anymake Orchestration System** — a three-tier agent loop that builds every story in the approved backlog autonomously, with your visibility into all progress via the agile board.
 
 ### How to Start the Orchestration Loop
 

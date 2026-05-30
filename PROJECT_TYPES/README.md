@@ -1,6 +1,6 @@
 # Project Types
 
-BMad Builder adapts its phases, questions, tasks, build order, and gate criteria to the **kind of thing you're building**. The default is a monetized SaaS web app, but the same phase-gated, artifact-driven discipline applies to a CLI tool, a library, a weekend hobby project, and more.
+Anymake adapts its phases, questions, tasks, build order, and gate criteria to the **kind of thing you're building**. The default is a monetized SaaS web app, but the same phase-gated, artifact-driven discipline applies to a CLI tool, a library, a weekend hobby project, and more.
 
 This directory holds one **profile** per supported project type. A profile is two files:
 

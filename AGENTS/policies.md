@@ -1,4 +1,4 @@
-# BMad Agent Policies
+# Anymake Agent Policies
 
 Shared reference for all agents in the Phase 4 orchestration system. When orchestrator.md, worker.md, or validator.md reference a policy, the authoritative version is here.
 

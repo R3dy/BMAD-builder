@@ -1,6 +1,6 @@
 # Task Brief — [Story N.N: Story Name]
 
-**Created by:** BMad Orchestrator
+**Created by:** Anymake Orchestrator
 **Created at:** [ISO datetime]
 **Project:** [Project name]
 **Project root:** [absolute path]

@@ -1,6 +1,6 @@
-# AGENTS.md — BMad Builder Agent Guide
+# AGENTS.md — Anymake Agent Guide
 
-This file documents how AI agents interact with the BMad Builder system. It covers the agent hierarchy, behavioral rules, file conventions, and the policies that govern autonomous execution.
+This file documents how AI agents interact with the Anymake system. It covers the agent hierarchy, behavioral rules, file conventions, and the policies that govern autonomous execution.
 
 ---
 
@@ -78,9 +78,9 @@ Each profile is two files:
 
 ## Skill Activation (OpenCode)
 
-When loaded via the OpenCode plugin, the contents of `SKILL.md` are injected as the active skill. Claude operates as the BMad Builder assistant for the entire session.
+When loaded via the OpenCode plugin, the contents of `SKILL.md` are injected as the active skill. Claude operates as the Anymake assistant for the entire session.
 
-**Trigger phrases:** "Start a new project", "Continue [project name]", "I have a product idea", "Build an app", "BMad", or any mention of building a SaaS product.
+**Trigger phrases:** "Start a new project", "Continue [project name]", "I have a product idea", "Build an app", "Anymake", or any mention of building a SaaS product.
 
 **Session startup ritual** (run at the start of every session):
 1. Check `PROJECTS/[name]/PHASE_STATE.md` — if it doesn't exist, start Phase 0

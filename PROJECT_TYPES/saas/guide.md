@@ -1,6 +1,6 @@
 # SaaS Web App — Build Guide
 
-> **`project_type: saas`** — the reference type. SaaS is the fullest expression of BMad Builder: every phase, every sub-track, monetization and a visual prototype included.
+> **`project_type: saas`** — the reference type. SaaS is the fullest expression of Anymake: every phase, every sub-track, monetization and a visual prototype included.
 
 For `saas`, the canonical, fully detailed phase instructions are the repository's base guides — they were written for this type:
 

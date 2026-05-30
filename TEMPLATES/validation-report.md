@@ -1,6 +1,6 @@
 # Validation Report — [Story N.N: Story Name]
 
-**Created by:** BMad Validator
+**Created by:** Anymake Validator
 **Created at:** [ISO datetime]
 **Story:** N.N — [Title]
 **Branch:** story/N.N-[slug]
