@@ -48,6 +48,34 @@ This repository is a discipline imposed on AI-assisted product building — a se
 
 ---
 
+## Project Types
+
+The system adapts to the **kind of thing being built**. The type is chosen at project creation, stored as `project_type` in `PHASE_STATE.md`, and read at the start of every session. Full profiles live in `PROJECT_TYPES/` (see `PROJECT_TYPES/README.md`).
+
+| `project_type` | Use for | Monetization | UI |
+|----------------|---------|--------------|----|
+| `saas` | Commercial hosted product with paying users (default, reference type) | First-class | Yes |
+| `hobby` | Personal project that just needs to run locally | None | Maybe |
+| `cli` | Terminal tool or automation script | Optional | No |
+| `library` | Code other developers import | Optional | No |
+| `api-service` | Headless web service / API | Optional | No |
+| `internal-tool` | Team app, not sold | Never | Yes |
+| `static-site` | Marketing site, blog, docs, portfolio | Optional | Yes |
+
+Each profile is two files:
+- `PROJECT_TYPES/<id>/manifest.md` — structured rules: phase map, success model, stack, mandatory/optional ADRs, **Phase 4 build order**, and **gate-criteria deltas**. Agents read this.
+- `PROJECT_TYPES/<id>/guide.md` — a self-contained phase walkthrough for that type.
+
+**How each agent uses the type:**
+- **Main agent** reads the type's `guide.md` each session and follows it instead of assuming SaaS.
+- **Orchestrator** sets each task brief's build order from the manifest's Phase 4 Build Order, and verifies the type's pre-orchestration milestones (Scaffold/Auth for web apps; different for headless types).
+- **Worker** follows the build order in its task brief (manifest-derived), not a hardcoded one.
+- **Product Owner Proxy** applies the manifest's Gate Criteria Deltas to the SaaS-baseline gate checks — skipping monetization/prototype checks for types that don't need them, replacing or adding checks as the manifest specifies. **Security checks are never skippable.**
+
+`saas` is the reference type, and its detailed phase instructions are the base `PHASE_GUIDES/`. Adding a new type means adding a `manifest.md` + `guide.md` — no orchestrator/worker/proxy code changes required.
+
+---
+
 ## Skill Activation (OpenCode)
 
 When loaded via the OpenCode plugin, the contents of `SKILL.md` are injected as the active skill. Claude operates as the BMad Builder assistant for the entire session.

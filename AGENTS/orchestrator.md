@@ -30,6 +30,8 @@ Read and internalize before starting:
 - `PROJECTS/[name]/docs/02-planning/architecture/` — ADRs (technical context for task briefs)
 - `PROJECTS/[name]/docs/02-planning/prd.md` — NFRs for security and performance context
 - `AGENTS/policies.md` — all retry, escalation, and classification policies (read this first)
+- `PROJECTS/[name]/PHASE_STATE.md` — for `project_type` and `autonomous_mode`
+- `PROJECT_TYPES/[project_type]/manifest.md` — the project type's Phase 4 build order, ADR set, and gate deltas
 
 ---
 
@@ -41,8 +43,7 @@ Before initializing the board, verify these prerequisites. If any are missing, w
 - [ ] `docs/03-solutioning/epics.md` contains acceptance criteria for all stories
 - [ ] `docs/03-solutioning/dependency-graph.md` exists
 - [ ] `docs/environment.md` exists
-- [ ] Milestone 1 (Scaffold) — all tasks checked `[x]` in backlog.md
-- [ ] Milestone 2 (Auth) — all tasks checked `[x]` in backlog.md
+- [ ] The project type's pre-orchestration milestones are complete. For `saas` (and other web-app types): Milestone 1 (Scaffold) and Milestone 2 (Auth), all tasks checked `[x]` in backlog.md. Headless or no-auth types (`cli`, `library`, `static-site`) may have a different prerequisite set — check `project_type` in PHASE_STATE.md and `PROJECT_TYPES/[project_type]/guide.md` and verify that type's prerequisites instead.
 
 If all prerequisites pass:
 1. Copy `TEMPLATES/BOARD.md` to `PROJECTS/[name]/BOARD.md`
@@ -72,7 +73,7 @@ Update dependency readiness each iteration: a story transitions from `⬜ Backlo
 
 1. Read the story's full definition from `epics.md` (acceptance criteria, technical tasks, dependencies)
 2. Build the task brief using `TEMPLATES/task-brief.md` — fill every section completely. Do not leave any placeholder unfilled.
-3. Include in the brief: relevant ADR decisions, current schema state, existing patterns from already-built stories
+3. Set the brief's technical-task order from the project type's `manifest.md` **Phase 4 Build Order** (for `saas`: `Schema → Migration → API → Component → Page → Integration → Test`; other types differ — a `library` has no schema/frontend layers, a `cli` ends in packaging + docs). Also include relevant ADR decisions, current schema state, and existing patterns from already-built stories
 4. Write task brief to `PROJECTS/[name]/docs/04-implementation/task-briefs/story-N.N.md`
 5. Update BOARD.md: story → `🔵 In Progress`, set branch name (`story/N.N-[slug]`), set timestamp
 6. Append to Run Log: `[time] Story N.N dispatched to worker — branch: story/N.N-[slug]`
